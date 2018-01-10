@@ -2,12 +2,12 @@ import { Contact } from '../models';
 import { validateContact, validateId } from '../helpers/validator';
 
 export const addContact = (req, res) => {
-  const { isValid, errors } = validateContact(req.body);
+  const { isValid, errors, sanitizeContact } = validateContact(req.body);
   if (!isValid) {
     return res.status(400).send({ message: 'Invalid inputs', errors });
   }
-  const { firstName, lastName, phone } = req.body;
-  return Contact.create({ firstName, lastName, phone })
+
+  return Contact.create({ ...sanitizeContact })
     .then((contact) => {
       if (contact) {
         return res.status(201).send({ message: 'Contact created!', contact });
@@ -19,26 +19,26 @@ export const addContact = (req, res) => {
       }
       return res.status(500).send({
         message: 'Internal Server Error',
+        error
       });
     });
 };
 
 export const updateContact = (req, res) => {
-  const { firstName, lastName, phone } = req.body;
-
   const { contactId } = req.params;
   if (!validateId(contactId)) {
     return res.status(400).send({ message: 'Enter valid contact ID' });
   }
 
-  const { isValid, errors } = validateContact(req.body);
+  const { isValid, errors, sanitizeContact } = validateContact(req.body);
   if (!isValid) {
     return res.status(400).send({ message: 'Invalid inputs', errors });
   }
+
   return Contact.findById(contactId)
     .then((foundContact) => {
       if (foundContact) {
-        return Contact.update({ firstName, lastName, phone }, {
+        return Contact.update({ ...sanitizeContact }, {
           where: { id: contactId },
         }).then(() => {
           return res.status(200).send({ message: 'Contact updated' });

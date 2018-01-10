@@ -6,8 +6,8 @@
  * @returns {boolean} true or false - based on if phone number is valid or not
  */
 export const validatePhone = (phone) => {
-  const phoneValidator = /\d{11}/i;
-  return phoneValidator.test(phone.trim());
+  const phoneValidator = /^\d{11}$/i;
+  return phoneValidator.test(phone);
 };
 
 /**
@@ -20,6 +20,7 @@ export const validatePhone = (phone) => {
  */
 export const validateContact = (contact) => {
   const errors = {};
+  let sanitizeContact = {};
   const { firstName, lastName, phone } = contact;
 
   if (firstName === undefined || lastName === undefined
@@ -43,13 +44,26 @@ export const validateContact = (contact) => {
       }
     }
 
-    if (fieldValue.length > 0 && fieldName === 'phone' &&
-    !validatePhone(fieldValue)) {
-      errors[fieldName] = 'Phone number is not valid';
+    if (fieldValue.length > 0 && fieldName === 'phone') {
+      if (!validatePhone(fieldValue)) {
+        errors[fieldName] = 'Phone number is not valid';
+      }
+    }
+
+    if (!errors[fieldName]) {
+      sanitizeContact[fieldName] = fieldValue.trim();
     }
   }
 
-  return { isValid: Object.keys(errors).length <= 0, errors };
+  if (Object.keys(errors).length <= 0) {
+    sanitizeContact = {
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      phone: phone.trim()
+    };
+  }
+
+  return { isValid: Object.keys(errors).length <= 0, errors, sanitizeContact };
 };
 
 /**
