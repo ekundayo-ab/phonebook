@@ -4,6 +4,11 @@
       "comma-dangle": "off",
       "arrow-parens": "off",
       "object-curly-newline": "off",
-      "arrow-body-style": "off"
+      "arrow-body-style": "off",
+      "import/no-extraneous-dependencies": "off"
+    },
+    "globals": {
+      "window": true,
+      "document": true
     }
 }
