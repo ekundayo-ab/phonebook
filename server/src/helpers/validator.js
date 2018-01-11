@@ -39,7 +39,8 @@ export const validateContact = (contact) => {
 
     if (fieldValue.length > 0
       && (fieldName === 'firstName' || fieldName === 'lastName')) {
-      if (!/[a-zA-Z-]+$/i.test(fieldValue) || fieldValue.length < 2) {
+        console.log(fieldValue);
+      if (!/^[a-z-]+$/i.test(fieldValue) || fieldValue.length < 2) {
         errors[fieldName] = '(a-z, A-Z, -) allowed & must be more than one letter';
       }
     }

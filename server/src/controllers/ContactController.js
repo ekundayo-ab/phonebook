@@ -40,8 +40,11 @@ export const updateContact = (req, res) => {
       if (foundContact) {
         return Contact.update({ ...sanitizeContact }, {
           where: { id: contactId },
-        }).then(() => {
-          return res.status(200).send({ message: 'Contact updated' });
+          plain: true,
+          returning: true
+        }).then((updatedContact) => {
+          const contact = updatedContact[1].dataValues;
+          return res.status(200).send({ message: 'Contact updated', contact });
         }).catch((error) => {
           return res.status(500).send({
             message: 'Internal Server Error',
@@ -82,7 +85,8 @@ export const deleteContact = (req, res) => {
           where: { id: contactId }
         }).then(() => {
           return res.status(200).send({
-            message: 'Contact deleted'
+            message: 'Contact deleted',
+            contact: foundContact
           });
         }).catch((error) => {
           return res.status(500).send({

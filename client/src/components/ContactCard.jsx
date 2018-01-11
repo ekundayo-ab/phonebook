@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ContactCard = (props) => {
-  const { firstName, lastName, phone } = props;
+const ContactCard = ({ contact, editContact, deleteContact }) => {
+  const { firstName, lastName, phone, id } = contact;
   return (
     <div className="col-sm-6 col-md-3 col-xs-12">
       <div className="contact-card">
@@ -12,8 +12,12 @@ const ContactCard = (props) => {
           <p><small className="lead">friends</small></p>
         </div>
         <div className="contact-action">
-          <i className="fa fa-edit" aria-hidden="true" />
-          <i className="fa fa-trash" aria-hidden="true" />
+          <button onClick={() => editContact(contact)}>
+            <i className="fa fa-edit" />
+          </button>
+          <button onClick={() => deleteContact(id)}>
+            <i className="fa fa-trash" />
+          </button>
         </div>
       </div>
     </div>
@@ -21,9 +25,13 @@ const ContactCard = (props) => {
 };
 
 ContactCard.propTypes = {
-  firstName: PropTypes.string.isRequired,
-  lastName: PropTypes.string.isRequired,
-  phone: PropTypes.string.isRequired,
+  contact: PropTypes.shape({
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    phone: PropTypes.string,
+  }).isRequired,
+  editContact: PropTypes.func.isRequired,
+  deleteContact: PropTypes.func.isRequired
 };
 
 export default ContactCard;

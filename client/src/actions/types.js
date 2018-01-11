@@ -1,2 +1,5 @@
 export const SET_ALL_CONTACTS = 'GET_ALL_CONTACTS';
+export const ADD_CONTACT = 'ADD_CONTACT';
+export const UPDATED_CONTACT = 'UPDATED_CONTACT';
+export const DELETED_CONTACT = 'DELETED_CONTACT';
 

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         is: {
-          args: ["^[a-z]+$",'i'],
+          args: ["^[a-z-]+$",'i'],
           msg: 'Must consist of only letters and/or -'
         }
       }
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         is: {
-          args: ["^[a-z]+$",'i'],
+          args: ["^[a-z-]+$",'i'],
           msg: 'Must consist of only letters and/or -'
         }
       }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default () => {
+const GroupCard = () => {
   return (
     <div className="row">
       <div className="col-lg-12 group-card">
@@ -12,3 +12,5 @@ export default () => {
     </div>
   );
 };
+
+export default GroupCard;

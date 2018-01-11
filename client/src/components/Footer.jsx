@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default () => {
+const Footer = () => {
   return (
     <footer className="container">
       <div className="stats text-center">
@@ -16,3 +16,6 @@ export default () => {
     </footer>
   );
 };
+
+export default Footer;
+

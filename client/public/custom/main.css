@@ -25,9 +25,9 @@ footer {
 .contact-card{
   border: 1px solid #06418e;
   box-sizing: border-box;
-  height: 180px;
-  padding: 10px;
+  height: 200px;
   margin-bottom: 15px;
+  padding: 10px;
  }
 
 .contact-action { float: right }
@@ -55,7 +55,7 @@ footer {
 }
 
 .contact-wrapper {
-  min-height: 500px;
+  min-height: 400px;
 }
 
 .group-card {

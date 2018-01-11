@@ -1,4 +1,5 @@
-import { SET_ALL_CONTACTS } from './../actions/types';
+import { SET_ALL_CONTACTS, ADD_CONTACT, UPDATED_CONTACT, DELETED_CONTACT }
+  from './../actions/types';
 
 const initialState = {
   contacts: []
@@ -18,6 +19,22 @@ const contactReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case SET_ALL_CONTACTS: {
       return { ...state, contacts: action.contacts };
+    }
+    case ADD_CONTACT: {
+      const newContacts = [...state.contacts, action.contact];
+      return { ...state, contacts: newContacts };
+    }
+    case DELETED_CONTACT: {
+      const contactsAfterDeletion =
+        state.contacts.filter(item => item.id !== action.contactId);
+      return { ...state, contacts: contactsAfterDeletion };
+    }
+    case UPDATED_CONTACT: {
+      const contactsAfterUpdating = state.contacts.map((contact) => {
+        if (contact.id === action.contact.id) return action.contact;
+        return contact;
+      });
+      return { ...state, contacts: contactsAfterUpdating };
     }
     default: return state;
   }
