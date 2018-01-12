@@ -60,7 +60,7 @@ export const validateContact = (contact) => {
       firstName: firstName.trim(),
       lastName: lastName.trim(),
       phone: phone.trim(),
-      groupId
+      groupId: !Number.isNaN(parseInt(groupId, 10)) ? groupId : null
     };
   }
 

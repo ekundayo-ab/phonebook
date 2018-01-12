@@ -10,7 +10,8 @@ export const addContact = (req, res) => {
   return Contact.create({ ...sanitizeContact })
     .then((contact) => {
       if (contact) {
-        const groupId = contact.groupId ? contact.groupId : null;
+        const groupId = !Number.NaN(parseInt(contact.groupId, 10)) ? contact.groupId : null;
+        console.log(groupId);
         return Group.findById(groupId)
           .then((group) => {
             return res.status(201).send({ message: 'Contact created!', contact, group });
@@ -48,7 +49,7 @@ export const updateContact = (req, res) => {
           returning: true
         }).then((updatedContact) => {
           const contact = updatedContact[1].dataValues;
-          const groupId = contact.groupId ? contact.groupId : null;
+          const groupId = !Number.isNaN(parseInt(contact.groupId, 10)) ? contact.groupId : null;
           return Group.findById(groupId)
             .then((group) => {
               return res.status(200).send({ message: 'Contact updated', contact, group });
