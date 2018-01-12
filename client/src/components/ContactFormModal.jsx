@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ContactFormModal = ({ formChange, formErrors, submitContact, contact }) => {
+const ContactFormModal = ({ formChange, formErrors, submitContact, contact, groups }) => {
   const { firstName, lastName, phone } = contact;
   return (
     <div className="row">
@@ -56,6 +56,25 @@ const ContactFormModal = ({ formChange, formErrors, submitContact, contact }) =>
                     value={phone}
                     onChange={formChange}
                   />
+                  {formErrors &&
+                    <span className="text-danger">{formErrors.phone}</span>}
+                </div>
+                <div className="form-group">
+                  <select
+                    type="text"
+                    className="form-control"
+                    id="group"
+                    name="group"
+                    onChange={formChange}
+                  >
+                    {groups.map((group) => {
+                      return (
+                        <option key={group.id} value={group.id}>
+                          {group.title}
+                        </option>
+                      );
+                    })}
+                  </select>
                   {formErrors &&
                     <span className="text-danger">{formErrors.phone}</span>}
                 </div>

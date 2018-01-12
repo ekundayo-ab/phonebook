@@ -58,7 +58,6 @@ const saveGroup = (group) => {
 };
 
 const updateGroup = ({ id, title }) => {
-  console.log(id);
   const groupToUpdate = { title };
   return dispatch => {
     return axios.put(`/api/v1/groups/${id}`, groupToUpdate)

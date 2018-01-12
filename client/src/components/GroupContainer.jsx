@@ -9,7 +9,7 @@ class GroupContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isEditing: false,
+      willEdit: false,
       groupToEdit: {
         title: '',
       },
@@ -27,7 +27,7 @@ class GroupContainer extends Component {
 
   handleEdit(group) {
     this.setState({
-      isEditing: true,
+      willEdit: true,
       groupToEdit: group,
     }, () => {
       $('#group-form').modal('show');
@@ -49,7 +49,7 @@ class GroupContainer extends Component {
 
   handleSubmit(event, groupToSave) {
     event.preventDefault();
-    if (this.state.isEditing) {
+    if (this.state.willEdit && this.state.groupToEdit.id) {
       return this.props.updateGroup(groupToSave)
         .then((res) => {
           if (res.errors) return this.setState({ errors: res.errors });

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getAllContacts, saveContact, updateContact, deleteContact }
   from './../actions/contactActions';
+import { getAllGroups } from './../actions/groupActions';
 import ContactFormModal from './ContactFormModal';
 import DashBoard from './DashBoard';
 import ContactCard from './ContactCard';
@@ -27,6 +28,7 @@ class ContactContainer extends Component {
 
   componentDidMount() {
     this.props.getAllContacts();
+    this.props.getAllGroups();
   }
 
   handleEdit(contact) {
@@ -102,6 +104,7 @@ class ContactContainer extends Component {
         {<ContactFormModal
           submitContact={(event) => this.handleSubmit(event, this.state.contactToEdit)}
           contact={this.state.contactToEdit}
+          groups={this.props.groups}
           formChange={this.handleChange}
           formErrors={this.state.errors}
         />}
@@ -115,12 +118,14 @@ ContactContainer.propTypes = {
   saveContact: PropTypes.func.isRequired,
   updateContact: PropTypes.func.isRequired,
   deleteContact: PropTypes.func.isRequired,
-  contacts: PropTypes.arrayOf(PropTypes.object).isRequired
+  contacts: PropTypes.arrayOf(PropTypes.object).isRequired,
+  groups: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 const mapStateToProps = (state) => {
   return {
-    contacts: state.contactReducer.contacts
+    contacts: state.contactReducer.contacts,
+    groups: state.groupReducer.groups
   };
 };
 
@@ -128,5 +133,6 @@ export default connect(mapStateToProps, {
   getAllContacts,
   saveContact,
   updateContact,
-  deleteContact
+  deleteContact,
+  getAllGroups
 })(ContactContainer);
