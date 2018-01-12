@@ -26,7 +26,7 @@ class ContactContainer extends Component {
         firstName: '',
         lastName: '',
         phone: '',
-        groupId: '',
+        groupId: 0,
         group: {
           title: ''
         }
@@ -54,11 +54,10 @@ class ContactContainer extends Component {
   }
 
   handleChange(e) {
+    let { value } = e.target;
+    if (e.target.name === 'groupId') value = parseInt(value, 10);
     this.setState({
-      contactToEdit: {
-        ...this.state.contactToEdit,
-        [e.target.name]: e.target.value
-      }
+      contactToEdit: { ...this.state.contactToEdit, [e.target.name]: value }
     });
   }
 
@@ -90,7 +89,11 @@ class ContactContainer extends Component {
             const initialContact = {
               firstName: '',
               lastName: '',
-              phone: ''
+              phone: '',
+              groupId: 0,
+              group: {
+                title: ''
+              }
             };
             this.setState({
               isEditing: false,

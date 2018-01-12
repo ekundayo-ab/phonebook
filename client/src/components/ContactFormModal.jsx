@@ -6,7 +6,7 @@ const defaultProps = {
     firstName: '',
     lastName: '',
     phone: '',
-    group: ''
+    groupId: 0
   }),
   formErrors: {}
 };
@@ -17,7 +17,8 @@ const propTypes = {
   contact: PropTypes.shape({
     firstName: PropTypes.string,
     lastName: PropTypes.string,
-    phone: PropTypes.string
+    phone: PropTypes.string,
+    groupId: PropTypes.number
   }),
   formErrors: PropTypes.shape({}),
   groups: PropTypes.arrayOf(PropTypes.object).isRequired
@@ -87,10 +88,10 @@ const ContactFormModal = ({ formChange, formErrors, submitContact, contact, grou
                     className="form-control"
                     id="groupId"
                     name="groupId"
+                    value={groupId}
                     onChange={formChange}
-                    defaultValue={groupId}
                   >
-                    <option value="">Please select a category</option>
+                    <option disabled value="0">Please select a category</option>
                     {groups.map((singleGroup) => {
                       return (
                         <option key={singleGroup.id} value={singleGroup.id}>

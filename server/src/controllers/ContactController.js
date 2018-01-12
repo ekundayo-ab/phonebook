@@ -9,15 +9,11 @@ export const addContact = (req, res) => {
 
   return Contact.create({ ...sanitizeContact })
     .then((contact) => {
-      if (contact) {
-        const groupId = !Number.NaN(parseInt(contact.groupId, 10)) ? contact.groupId : null;
-        console.log(groupId);
-        return Group.findById(groupId)
-          .then((group) => {
-            return res.status(201).send({ message: 'Contact created!', contact, group });
-          });
-      }
-      return res.status(400).send({ message: 'Oops! Please try again' });
+      const groupId = parseInt(contact.groupId, 10) || null;
+      return Group.findById(groupId)
+        .then((group) => {
+          return res.status(201).send({ message: 'Contact created!', contact, group });
+        });
     }).catch((error) => {
       if (error.name === 'SequelizeUniqueConstraintError') {
         return res.status(409).send({ message: 'Phone Number already used!' });
