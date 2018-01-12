@@ -64,6 +64,7 @@ const updateGroup = ({ id, title }) => {
     return axios.put(`/api/v1/groups/${id}`, groupToUpdate)
       .then((res) => {
         dispatch(updatedGroup(res.data.group));
+        dispatch(getAllContacts());
         notify(res.data.message, 'green', 2000);
         $('#group-form').modal('hide');
         return true;
