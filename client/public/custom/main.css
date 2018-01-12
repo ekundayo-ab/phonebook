@@ -1,7 +1,12 @@
 header {
   background-color: #ebe7e7;
+  margin:0;
+}
+
+.dashboard {
+  background-color: #ebe7e7;
   min-height: 131px;
-  padding: 20px;
+  padding: 50px 10px;
 }
 
 main {
@@ -17,7 +22,17 @@ footer {
 
 .app-title {
   color: #06418e;
-  margin-bottom: 40px;
+  margin-bottom: -10px;
+  padding-top: 20px;
+}
+
+.group-tile {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.group-tile {
+  padding-bottom: 20px;
 }
 
 .stats { text-align: center }
@@ -68,6 +83,11 @@ footer {
   background-image: none;
   border-color: #ffffff;
   color: #1b66b7;
+}
+
+.badge.badge-default {
+  border: 1px solid gray;
+  border-color: gray !important;
 }
 
 @media screen and (max-width: 480px) {

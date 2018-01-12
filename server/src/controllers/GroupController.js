@@ -39,8 +39,11 @@ export const updateGroup = (req, res) => {
       if (foundGroup) {
         return Group.update({ title: title.trim() }, {
           where: { id: groupId },
-        }).then(() => {
-          return res.status(200).send({ message: 'Group updated' });
+          returning: true,
+          plain: true
+        }).then((updatedGroup) => {
+          const group = updatedGroup[1].dataValues;
+          return res.status(200).send({ message: 'Group updated', group });
         }).catch((error) => {
           return res.status(500).send({
             message: 'Internal Server Error',
@@ -81,7 +84,8 @@ export const deleteGroup = (req, res) => {
           where: { id: groupId }
         }).then(() => {
           return res.status(200).send({
-            message: 'Group deleted'
+            message: 'Group deleted',
+            group: foundGroup
           });
         }).catch((error) => {
           return res.status(500).send({
