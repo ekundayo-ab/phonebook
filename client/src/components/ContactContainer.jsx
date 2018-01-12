@@ -8,6 +8,15 @@ import ContactFormModal from './ContactFormModal';
 import DashBoard from './DashBoard';
 import ContactCard from './ContactCard';
 
+const propTypes = {
+  getAllContacts: PropTypes.func.isRequired,
+  getAllGroups: PropTypes.func.isRequired,
+  saveContact: PropTypes.func.isRequired,
+  updateContact: PropTypes.func.isRequired,
+  deleteContact: PropTypes.func.isRequired,
+  contacts: PropTypes.arrayOf(PropTypes.object).isRequired,
+  groups: PropTypes.arrayOf(PropTypes.object).isRequired
+};
 class ContactContainer extends Component {
   constructor(props) {
     super(props);
@@ -16,7 +25,11 @@ class ContactContainer extends Component {
       contactToEdit: {
         firstName: '',
         lastName: '',
-        phone: ''
+        phone: '',
+        groupId: '',
+        group: {
+          title: ''
+        }
       },
       errors: {}
     };
@@ -113,14 +126,7 @@ class ContactContainer extends Component {
   }
 }
 
-ContactContainer.propTypes = {
-  getAllContacts: PropTypes.func.isRequired,
-  saveContact: PropTypes.func.isRequired,
-  updateContact: PropTypes.func.isRequired,
-  deleteContact: PropTypes.func.isRequired,
-  contacts: PropTypes.arrayOf(PropTypes.object).isRequired,
-  groups: PropTypes.arrayOf(PropTypes.object).isRequired
-};
+ContactContainer.propTypes = propTypes;
 
 const mapStateToProps = (state) => {
   return {

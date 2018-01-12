@@ -6,15 +6,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true
     }
-  }, {
-    classMethods: {
-      associate: function(models) {
-        Group.hasMany(models.Contact, {
-          foreignKey: 'groupId',
-          as: 'group',
-        });
-      }
-    }
   });
+  Group.associate = (models) => {
+    Group.hasMany(models.Contact, {
+      foreignKey: 'groupId',
+      as: 'group',
+    });
+  };
   return Group;
 };

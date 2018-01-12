@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const propTypes = {
+  addNewContact: PropTypes.func.isRequired,
+};
+
 const DashBoard = ({ addNewContact }) => {
   return (
     <div className="container">
@@ -30,9 +34,7 @@ const DashBoard = ({ addNewContact }) => {
   );
 };
 
-DashBoard.propTypes = {
-  addNewContact: PropTypes.func.isRequired,
-};
+DashBoard.propTypes = propTypes;
 
 export default DashBoard;
 

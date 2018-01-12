@@ -1,8 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const defaultProps = {
+  contact: PropTypes.shape({
+    firstName: '',
+    lastName: '',
+    phone: '',
+    group: ''
+  }),
+  formErrors: {}
+};
+
+const propTypes = {
+  submitContact: PropTypes.func.isRequired,
+  formChange: PropTypes.func.isRequired,
+  contact: PropTypes.shape({
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    phone: PropTypes.string
+  }),
+  formErrors: PropTypes.shape({}),
+  groups: PropTypes.arrayOf(PropTypes.object).isRequired
+};
+
 const ContactFormModal = ({ formChange, formErrors, submitContact, contact, groups }) => {
-  const { firstName, lastName, phone } = contact;
+  const { firstName, lastName, phone, groupId } = contact;
   return (
     <div className="row">
       <div className="col-md-offset-12 modal fade" id="contact-form">
@@ -63,20 +85,22 @@ const ContactFormModal = ({ formChange, formErrors, submitContact, contact, grou
                   <select
                     type="text"
                     className="form-control"
-                    id="group"
-                    name="group"
+                    id="groupId"
+                    name="groupId"
                     onChange={formChange}
+                    defaultValue={groupId}
                   >
-                    {groups.map((group) => {
+                    <option value="">Please select a category</option>
+                    {groups.map((singleGroup) => {
                       return (
-                        <option key={group.id} value={group.id}>
-                          {group.title}
+                        <option key={singleGroup.id} value={singleGroup.id}>
+                          {singleGroup.title}
                         </option>
                       );
                     })}
                   </select>
                   {formErrors &&
-                    <span className="text-danger">{formErrors.phone}</span>}
+                    <span className="text-danger">{formErrors.group}</span>}
                 </div>
               </div>
               <div className="modal-footer">
@@ -100,25 +124,7 @@ const ContactFormModal = ({ formChange, formErrors, submitContact, contact, grou
   );
 };
 
-
-ContactFormModal.defaultProps = {
-  contact: PropTypes.shape({
-    firstName: '',
-    lastName: '',
-    phone: ''
-  }),
-  formErrors: {}
-};
-
-ContactFormModal.propTypes = {
-  submitContact: PropTypes.func.isRequired,
-  formChange: PropTypes.func.isRequired,
-  contact: PropTypes.shape({
-    firstName: PropTypes.string,
-    lastName: PropTypes.string,
-    phone: PropTypes.string
-  }),
-  formErrors: PropTypes.shape({})
-};
+ContactFormModal.defaultProps = defaultProps;
+ContactFormModal.propTypes = propTypes;
 
 export default ContactFormModal;

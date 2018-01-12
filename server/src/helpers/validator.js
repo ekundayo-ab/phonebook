@@ -21,7 +21,7 @@ export const validatePhone = (phone) => {
 export const validateContact = (contact) => {
   const errors = {};
   let sanitizeContact = {};
-  const { firstName, lastName, phone } = contact;
+  const { firstName, lastName, phone, groupId } = contact;
 
   if (firstName === undefined || lastName === undefined
     || phone === undefined) {
@@ -39,7 +39,6 @@ export const validateContact = (contact) => {
 
     if (fieldValue.length > 0
       && (fieldName === 'firstName' || fieldName === 'lastName')) {
-        console.log(fieldValue);
       if (!/^[a-z-]+$/i.test(fieldValue) || fieldValue.length < 2) {
         errors[fieldName] = '(a-z, A-Z, -) allowed & must be more than one letter';
       }
@@ -60,7 +59,8 @@ export const validateContact = (contact) => {
     sanitizeContact = {
       firstName: firstName.trim(),
       lastName: lastName.trim(),
-      phone: phone.trim()
+      phone: phone.trim(),
+      groupId
     };
   }
 

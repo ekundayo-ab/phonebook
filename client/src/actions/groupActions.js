@@ -2,6 +2,7 @@ import axios from 'axios';
 import { SET_ALL_GROUPS, ADD_GROUP, UPDATED_GROUP, DELETED_GROUP }
   from './types';
 import { notify } from './../helpers/utils';
+import { getAllContacts } from './contactActions';
 
 const setGroups = (groups) => {
   return {
@@ -78,6 +79,7 @@ const deleteGroup = (groupId) => {
     return axios.delete(`/api/v1/groups/${groupId}`)
       .then((res) => {
         dispatch(deletedGroup(res.data.group.id));
+        dispatch(getAllContacts());
         notify(res.data.message, 'green', 2000);
       }).catch((err) => {
         notify(err.response.statusText, 'red', 2000);

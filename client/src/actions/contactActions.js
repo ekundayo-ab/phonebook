@@ -46,7 +46,11 @@ const saveContact = (contact) => {
   return dispatch => {
     return axios.post('/api/v1/contacts', contact)
       .then((res) => {
-        dispatch(addContact(res.data.contact));
+        const newContact = {
+          ...res.data.contact,
+          group: res.data.group
+        };
+        dispatch(addContact(newContact));
         notify(res.data.message, 'green', 2000);
         $('#contact-form').modal('hide');
         return true;
@@ -57,12 +61,16 @@ const saveContact = (contact) => {
   };
 };
 
-const updateContact = ({ id, firstName, lastName, phone }) => {
-  const contactToUpdate = { firstName, lastName, phone };
+const updateContact = ({ id, firstName, lastName, phone, groupId }) => {
+  const contactToUpdate = { firstName, lastName, phone, groupId };
   return dispatch => {
     return axios.put(`/api/v1/contacts/${id}`, contactToUpdate)
       .then((res) => {
-        dispatch(updatedContact(res.data.contact));
+        const contactUpdated = {
+          ...res.data.contact,
+          group: res.data.group
+        };
+        dispatch(updatedContact(contactUpdated));
         notify(res.data.message, 'green', 2000);
         $('#contact-form').modal('hide');
         return true;

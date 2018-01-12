@@ -1,4 +1,4 @@
-import { Contact } from '../models';
+import { Contact, Group } from '../models';
 import { validateContact, validateId } from '../helpers/validator';
 
 export const addContact = (req, res) => {
@@ -10,7 +10,11 @@ export const addContact = (req, res) => {
   return Contact.create({ ...sanitizeContact })
     .then((contact) => {
       if (contact) {
-        return res.status(201).send({ message: 'Contact created!', contact });
+        const groupId = contact.groupId ? contact.groupId : null;
+        return Group.findById(groupId)
+          .then((group) => {
+            return res.status(201).send({ message: 'Contact created!', contact, group });
+          });
       }
       return res.status(400).send({ message: 'Oops! Please try again' });
     }).catch((error) => {
@@ -44,7 +48,11 @@ export const updateContact = (req, res) => {
           returning: true
         }).then((updatedContact) => {
           const contact = updatedContact[1].dataValues;
-          return res.status(200).send({ message: 'Contact updated', contact });
+          const groupId = contact.groupId ? contact.groupId : null;
+          return Group.findById(groupId)
+            .then((group) => {
+              return res.status(200).send({ message: 'Contact updated', contact, group });
+            });
         }).catch((error) => {
           return res.status(500).send({
             message: 'Internal Server Error',
@@ -62,7 +70,11 @@ export const updateContact = (req, res) => {
 };
 
 export const listAllContacts = (req, res) => {
-  return Contact.findAll({}).then((contacts) => {
+  return Contact.findAll({
+    include: [
+      { model: Group, as: 'group', required: false },
+    ]
+  }).then((contacts) => {
     return res.status(200).send({ contacts });
   }).catch((error) => {
     return res.status(500).send({

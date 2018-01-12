@@ -1,6 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const defaultProps = {
+  group: {
+    title: ''
+  },
+  formErrors: {}
+};
+
+const propTypes = {
+  submitGroup: PropTypes.func.isRequired,
+  formChange: PropTypes.func.isRequired,
+  group: PropTypes.shape({
+    title: PropTypes.string
+  }),
+  formErrors: PropTypes.shape({})
+};
+
 const GroupFormModal = ({ formChange, formErrors, submitGroup, group }) => {
   const { title } = group;
   return (
@@ -55,20 +71,7 @@ const GroupFormModal = ({ formChange, formErrors, submitGroup, group }) => {
   );
 };
 
-GroupFormModal.defaultProps = {
-  group: {
-    title: ''
-  },
-  formErrors: {}
-};
-
-GroupFormModal.propTypes = {
-  submitGroup: PropTypes.func.isRequired,
-  formChange: PropTypes.func.isRequired,
-  group: PropTypes.shape({
-    title: PropTypes.string
-  }),
-  formErrors: PropTypes.shape({})
-};
+GroupFormModal.defaultProps = defaultProps;
+GroupFormModal.propTypes = propTypes;
 
 export default GroupFormModal;

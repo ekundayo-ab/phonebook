@@ -5,6 +5,13 @@ import GroupFormModal from './GroupFormModal';
 import { getAllGroups, saveGroup, updateGroup, deleteGroup }
   from './../actions/groupActions';
 
+const propTypes = {
+  getAllGroups: PropTypes.func.isRequired,
+  saveGroup: PropTypes.func.isRequired,
+  updateGroup: PropTypes.func.isRequired,
+  deleteGroup: PropTypes.func.isRequired,
+  groups: PropTypes.arrayOf(PropTypes.object).isRequired
+};
 class GroupContainer extends Component {
   constructor(props) {
     super(props);
@@ -70,7 +77,7 @@ class GroupContainer extends Component {
       <div className="container">
         <div className="row">
           <div className="col-lg-12 group-card">
-            <h5>Double Click on group name to edit</h5>
+            <h5>Groups for your contacts. Manage here</h5>
             {this.props.groups.map((group) => {
               return (
                 <div key={group.id} className="group-tile">
@@ -106,13 +113,7 @@ class GroupContainer extends Component {
   }
 }
 
-GroupContainer.propTypes = {
-  getAllGroups: PropTypes.func.isRequired,
-  saveGroup: PropTypes.func.isRequired,
-  updateGroup: PropTypes.func.isRequired,
-  deleteGroup: PropTypes.func.isRequired,
-  groups: PropTypes.arrayOf(PropTypes.object).isRequired
-};
+GroupContainer.propTypes = propTypes;
 
 const mapStateToProps = (state) => {
   return {
