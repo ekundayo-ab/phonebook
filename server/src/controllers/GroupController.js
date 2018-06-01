@@ -7,7 +7,7 @@ export const addGroup = (req, res) => {
     return res.status(400).send({ message: 'Invalid inputs', errors });
   }
   const { title } = req.body;
-  return Group.create({ title }).then((group) => {
+  return Group.create({ title: title.trim() }).then((group) => {
     if (group) {
       return res.status(201).send({ message: 'Group created!', group });
     }
@@ -37,10 +37,13 @@ export const updateGroup = (req, res) => {
   return Group.findById(groupId)
     .then((foundGroup) => {
       if (foundGroup) {
-        return Group.update({ title }, {
+        return Group.update({ title: title.trim() }, {
           where: { id: groupId },
-        }).then(() => {
-          return res.status(200).send({ message: 'Group updated' });
+          returning: true,
+          plain: true
+        }).then((updatedGroup) => {
+          const group = updatedGroup[1].dataValues;
+          return res.status(200).send({ message: 'Group updated', group });
         }).catch((error) => {
           return res.status(500).send({
             message: 'Internal Server Error',
@@ -81,7 +84,8 @@ export const deleteGroup = (req, res) => {
           where: { id: groupId }
         }).then(() => {
           return res.status(200).send({
-            message: 'Group deleted'
+            message: 'Group deleted',
+            group: foundGroup
           });
         }).catch((error) => {
           return res.status(500).send({

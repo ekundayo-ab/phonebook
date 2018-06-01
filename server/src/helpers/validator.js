@@ -6,8 +6,8 @@
  * @returns {boolean} true or false - based on if phone number is valid or not
  */
 export const validatePhone = (phone) => {
-  const phoneValidator = /\d{11}/i;
-  return phoneValidator.test(phone.trim());
+  const phoneValidator = /^\d{11}$/i;
+  return phoneValidator.test(phone);
 };
 
 /**
@@ -20,7 +20,8 @@ export const validatePhone = (phone) => {
  */
 export const validateContact = (contact) => {
   const errors = {};
-  const { firstName, lastName, phone } = contact;
+  let sanitizeContact = {};
+  const { firstName, lastName, phone, groupId } = contact;
 
   if (firstName === undefined || lastName === undefined
     || phone === undefined) {
@@ -38,18 +39,32 @@ export const validateContact = (contact) => {
 
     if (fieldValue.length > 0
       && (fieldName === 'firstName' || fieldName === 'lastName')) {
-      if (!/[a-zA-Z-]+$/i.test(fieldValue) || fieldValue.length < 2) {
+      if (!/^[a-z-]+$/i.test(fieldValue) || fieldValue.length < 2) {
         errors[fieldName] = '(a-z, A-Z, -) allowed & must be more than one letter';
       }
     }
 
-    if (fieldValue.length > 0 && fieldName === 'phone' &&
-    !validatePhone(fieldValue)) {
-      errors[fieldName] = 'Phone number is not valid';
+    if (fieldValue.length > 0 && fieldName === 'phone') {
+      if (!validatePhone(fieldValue)) {
+        errors[fieldName] = 'Phone number is not valid';
+      }
+    }
+
+    if (!errors[fieldName]) {
+      sanitizeContact[fieldName] = fieldValue.trim();
     }
   }
 
-  return { isValid: Object.keys(errors).length <= 0, errors };
+  if (Object.keys(errors).length <= 0) {
+    sanitizeContact = {
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      phone: phone.trim(),
+      groupId: !Number.isNaN(parseInt(groupId, 10)) ? groupId : null
+    };
+  }
+
+  return { isValid: Object.keys(errors).length <= 0, errors, sanitizeContact };
 };
 
 /**

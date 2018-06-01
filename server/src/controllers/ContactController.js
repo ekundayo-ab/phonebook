@@ -1,47 +1,55 @@
-import { Contact } from '../models';
+import { Contact, Group } from '../models';
 import { validateContact, validateId } from '../helpers/validator';
 
 export const addContact = (req, res) => {
-  const { isValid, errors } = validateContact(req.body);
+  const { isValid, errors, sanitizeContact } = validateContact(req.body);
   if (!isValid) {
     return res.status(400).send({ message: 'Invalid inputs', errors });
   }
-  const { firstName, lastName, phone } = req.body;
-  return Contact.create({ firstName, lastName, phone })
+
+  return Contact.create({ ...sanitizeContact })
     .then((contact) => {
-      if (contact) {
-        return res.status(201).send({ message: 'Contact created!', contact });
-      }
-      return res.status(400).send({ message: 'Oops! Please try again' });
+      const groupId = parseInt(contact.groupId, 10) || null;
+      return Group.findById(groupId)
+        .then((group) => {
+          return res.status(201).send({ message: 'Contact created!', contact, group });
+        });
     }).catch((error) => {
       if (error.name === 'SequelizeUniqueConstraintError') {
         return res.status(409).send({ message: 'Phone Number already used!' });
       }
       return res.status(500).send({
         message: 'Internal Server Error',
+        error
       });
     });
 };
 
 export const updateContact = (req, res) => {
-  const { firstName, lastName, phone } = req.body;
-
   const { contactId } = req.params;
   if (!validateId(contactId)) {
     return res.status(400).send({ message: 'Enter valid contact ID' });
   }
 
-  const { isValid, errors } = validateContact(req.body);
+  const { isValid, errors, sanitizeContact } = validateContact(req.body);
   if (!isValid) {
     return res.status(400).send({ message: 'Invalid inputs', errors });
   }
+
   return Contact.findById(contactId)
     .then((foundContact) => {
       if (foundContact) {
-        return Contact.update({ firstName, lastName, phone }, {
+        return Contact.update({ ...sanitizeContact }, {
           where: { id: contactId },
-        }).then(() => {
-          return res.status(200).send({ message: 'Contact updated' });
+          plain: true,
+          returning: true
+        }).then((updatedContact) => {
+          const contact = updatedContact[1].dataValues;
+          const groupId = !Number.isNaN(parseInt(contact.groupId, 10)) ? contact.groupId : null;
+          return Group.findById(groupId)
+            .then((group) => {
+              return res.status(200).send({ message: 'Contact updated', contact, group });
+            });
         }).catch((error) => {
           return res.status(500).send({
             message: 'Internal Server Error',
@@ -59,7 +67,11 @@ export const updateContact = (req, res) => {
 };
 
 export const listAllContacts = (req, res) => {
-  return Contact.findAll({}).then((contacts) => {
+  return Contact.findAll({
+    include: [
+      { model: Group, as: 'group', required: false },
+    ]
+  }).then((contacts) => {
     return res.status(200).send({ contacts });
   }).catch((error) => {
     return res.status(500).send({
@@ -82,7 +94,8 @@ export const deleteContact = (req, res) => {
           where: { id: contactId }
         }).then(() => {
           return res.status(200).send({
-            message: 'Contact deleted'
+            message: 'Contact deleted',
+            contact: foundContact
           });
         }).catch((error) => {
           return res.status(500).send({

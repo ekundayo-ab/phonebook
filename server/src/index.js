@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8000;
 
 app.use((req, res, next) => {
   res.header('Content-Type', 'application/json');
@@ -27,6 +27,6 @@ app.use('*', (req, res) => {
   }, null, 2));
 });
 
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log(`connnected on port ${port} running in ${app.get('env')} mode`);
 });
