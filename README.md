@@ -1,3 +1,6 @@
+# Simple Phonebook Application
+![Simple Phonebook](simple_phonebook.png?raw=true "Home")
+
 # Simple Phonebook
 A simple Phonebook application for managing and organising contacts
 
