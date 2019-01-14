@@ -7,10 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run build && node ./server/build/",
     "build": "npx babel server/src --out-dir server/build --copy-files",
-    "client:start": "webpack-dev-server --open",
-    "client:build": "webpack --env=production -p --progress --colors",
-    "start:dev": "babel-watch ./server/src/",
-    "build:dev": "npx babel server/src --watch --out-dir server/build --copy-files",
+    "client:dev": "webpack-dev-server --open",
+    "client:prod": "webpack --env=production -p --progress --colors",
+    "server-dev": "babel-watch ./server/src/",
+    "server-prod": "npx babel server/src --watch --out-dir server/build --copy-files",
     "reset:db": "sequelize db:migrate:undo:all && sequelize db:migrate"
   },
   "repository": {

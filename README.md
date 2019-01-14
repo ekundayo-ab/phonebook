@@ -1,33 +1,25 @@
 # Simple Phonebook
-
 A simple Phonebook application for managing and organising contacts
 
 ## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development
 
 ### Prerequisites
+Ensure you have these setup on your machine
+- NodeJS - Server environment for running javascript
+- Postgres - Database used
+- Sequelize CLI - Object relational mapper for running migrations etc
 
-
-
-### Installing
-
-
-
-## Running the tests
-
-
-### Break down into end to end tests
-
-
-
-### And coding style tests
-
-
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
+### Setting up
+1. Clone this repository to your directory locally like so `git clone git@github.com:ekundayo-ab/simple-phonebook.git`
+2. Rename the `.env.sample` file in the root of the project directory to `.env` and change the `DB_USER`, `DB_NAME` and `DB_PASS` as it applies to you.
+3. From the terminal `cd` into the project directory and run `npm install`
+4. Run the model migrations with `sequelize db:migrate`
+**For Development**
+5. Open two terminals and enter `npm run server-dev` on one and `npm run client-dev` on another
+**For Production**
+5. Open two terminals and enter `npm run server-prod` on one and `npm run client-prod` on another
+6. Navigate to url provided in the terminal for the `client-dev` to see the application or access through the url provided by your production hosting platform.
 
 ## Built With
 * [Bootstrap](https://getbootstrap.com/) - Open source toolkit for developing with HTML, CSS, and JS.
@@ -38,20 +30,7 @@ Add additional notes about how to deploy this on a live system
 * [PostgreSQL](https://www.postgresql.org/) - Open source database
 * [Sequelize](http://docs.sequelizejs.com/) - Sequelize is a promise-based ORM for Node.js v4 and up.
 
-## Contributing
-
-
-## Versioning
-
 
 ## Authors
 
 * **Ekundayo Abiona** - *Initial work* - [ekundayo-ab](https://github.com/ekundayo-ab)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-
-
-## Acknowledgments
