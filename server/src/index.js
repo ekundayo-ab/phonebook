@@ -3,6 +3,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import router from './router';
 
+require('dotenv').config();
+
 const app = express();
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
