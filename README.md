@@ -1,8 +1,8 @@
-# Simple Phonebook Application
-![Simple Phonebook](simple_phonebook.png?raw=true "Home")
+# Phonebook Application
+![Phonebook](simple_phonebook.png?raw=true "Home")
 
-# Simple Phonebook
-A simple Phonebook application for managing and organising contacts
+# Phonebook
+A Phonebook application for managing and organising contacts
 
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development
@@ -14,7 +14,7 @@ Ensure you have these setup on your machine
 - Sequelize CLI - Object relational mapper for running migrations etc
 
 ### Setting up
-1. Clone this repository to your directory locally like so `git clone git@github.com:ekundayo-ab/simple-phonebook.git`
+1. Clone this repository to your directory locally like so `git clone git@github.com:ekundayo-ab/phonebook.git`
 2. Rename the `.env.sample` file in the root of the project directory to `.env` and change the `DB_USER`, `DB_NAME` and `DB_PASS` as it applies to you.
 3. From the terminal `cd` into the project directory and run `npm install`
 4. Run the model migrations with `sequelize db:migrate`
